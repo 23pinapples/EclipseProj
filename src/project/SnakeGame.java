@@ -20,6 +20,14 @@ public class SnakeGame {
 	//check if dead
 	//initializing stuff(player, grid, ect)
 	private final int size = 21;
+	public static int score = 0;
+
+
+	public SnakeGame(int size) {
+
+		//		this.foodPosX = (1/(2*size))+ (1/size)*(int)(Math.random()*size);
+		//		this.foodPosY = (1/(2*size))+ (1/size)*(int)(Math.random()*size);
+	}
 
 	public static void genBoard(double size) {
 		//size = 10 by 10
@@ -50,16 +58,6 @@ public class SnakeGame {
 
 	}
 
-	public static void genFood(double size) {
-
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream dolla = classLoader.getResourceAsStream("dolla.png");
-		double foodPosX = (1/(2*size))+ (1/size)*(int)(Math.random()*size);
-		double foodPosY = (1/(2*size))+ (1/size)*(int)(Math.random()*size);
-		System.out.println("x pos is " + foodPosX + " y pos is " + foodPosY);
-		StdDraw.picture(foodPosX, foodPosY, "dolla.png", 1/size, 1/size);
-	}
-
 
 
 
@@ -70,36 +68,51 @@ public class SnakeGame {
 		//Double size= ap.nextDouble("put in size of grid");
 		int size = 21;
 
-		List<Double> positionX = new LinkedList<Double>();
-		List<Double> positionY = new LinkedList<Double>();
+		LinkedList<Double> positionX = new LinkedList<Double>();
+		LinkedList<Double> positionY = new LinkedList<Double>();
 
 
-		//genFood(size);
+		Move.genFood(size);
 		//Move move = new Move(size);
 		Move.update(positionX, positionY,size);	//init position
-		System.out.println("**position y is " + positionY);
+
+
+		//System.out.println("**position y is " + positionY);
 		//		Move.dir(); //set direction
 		//		Move.goSnake(positionX,positionY,size); //change position based dir
 		//		Move.drawSnake(positionX,positionY,size); //draws things based on list
 		StdDraw.enableDoubleBuffering();
-		while(Move.collision(positionX, positionY,size))
+		while(true)
 		{
-
 			StdDraw.clear();
 			genBoard(size);
 			Move.dir(); //set direction
-			System.out.println("position x is" + positionX);
-			System.out.println("position y is " + positionY);
+
 			Move.goSnake(positionX,positionY,size); //change position based dir
 			//System.out.println("changed" +positionX);
 			Move.drawSnake(positionX,positionY,size); //draws things based on list
 
+			if (Move.collision(positionX, positionY, size)==false)
+			{
+				System.out.println("snake is dead");
+				break;
+			}
+
+
+
+			if (Move.getFood(positionX,positionY,size))
+			{
+				score++;
+				System.out.println("yum " + score);
+			}
+
+			Move.drawFood(size);
+			//genFood(size);
+
 			StdDraw.show(100);
 
 		}
-		//System.out.println((int)(Math.random()*5));
 
-		// TODO: Run the game from here!
 	}
 
 }

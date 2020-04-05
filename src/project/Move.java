@@ -6,6 +6,7 @@ import java.util.List;
 
 import edu.princeton.cs.introcs.StdDraw;
 
+import java.io.InputStream;
 import java.util.*;
 
 public class Move {
@@ -21,6 +22,8 @@ public class Move {
 	private static boolean upKey =  StdDraw.isKeyPressed(38);
 	private static boolean downKey = StdDraw.isKeyPressed(40);
 	private static boolean alive = true;
+	
+	private static double foodPosX, foodPosY;
 	//	private List <Double> positionX;
 	//	private List<Double> positionY;
 	//private static int size = 21;
@@ -122,28 +125,87 @@ public class Move {
 	}
 
 	public static boolean collision(List<Double> positionX,List<Double> positionY,int size) {
-		if (left && positionX.get(0)<(1.0/size))
+		if (left && positionX.get(0)<(0.5/size))
 		{
 			alive = false;
+			
 		}
-		if (right && positionX.get(0)>(1.0*(size-1)/size) || positionX.get(0)>1)
+		if (right && positionX.get(0)>1 )
 
 		{
 			alive = false;
+			//System.out.println("right dead");
 		}
 
-		if (up && positionY.get(0)<(1.0/size))
-		{
-			alive = false;
-		}
-
-		if (down && positionY.get(0)>(1.0*(size-1)/size) || positionY.get(0)>1)
-
+		if (up && positionY.get(0)>1)
 		{
 			alive = false;
 		}
 
-return alive;
+		if (down && positionY.get(0)<0)
+
+		{
+			alive = false;
+		}
+
+		for (int i =1; i<positionX.size(); ++i)
+		{
+			if (positionX.get(0)==positionX.get(i) && positionY.get(0)==positionY.get(i))
+			{
+				alive = false;
+			}
+		}
+		
+		return alive;
+	}
+	
+	public static boolean getFood(LinkedList<Double> positionX,LinkedList<Double> positionY,int size) 
+	{
+		if (Math.abs(foodPosX-positionX.get(0))<(0.5/size) && Math.abs(foodPosY-positionY.get(0))<(0.5/size))
+		{
+			
+			genFood(size);
+			if (up)
+			{
+				positionX.addLast(positionX.getLast());
+				positionY.addLast(positionY.getLast()+(1.0/size));
+			}
+			
+			if (down)
+			{
+				positionX.addLast(positionX.getLast());
+				positionY.addLast(positionY.getLast()-(1.0/size));
+			}
+			
+			if (left)
+			{
+				positionX.addLast(positionX.getLast()+(1.0/size));
+				positionY.addLast(positionY.getLast());
+			}
+			
+			if (right)
+			{
+				positionX.addLast(positionX.getLast()-(1.0/size));
+				positionY.addLast(positionY.getLast());
+			}
+			return true;
+		}
+		
+		return false;
+	}
+
+	public static void genFood(int size) {
+
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream dolla = classLoader.getResourceAsStream("dolla.png");
+		foodPosX = (1/(2.0*size))+ (1.0/size)*(int)(Math.random()*size);
+		foodPosY = (1/(2.0*size))+ (1.0/size)*(int)(Math.random()*size);
+//		System.out.println("food x pos is " + foodPosX + "food  y pos is " + foodPosY);
+//		StdDraw.picture(foodPosX, foodPosY, "dolla.png", 1.0/size, 1.0/size);
+	}
+	
+	public static void drawFood(int size) {
+		StdDraw.picture(foodPosX, foodPosY, "dolla.png", 1.0/size, 1.0/size);
 	}
 
 	public static void drawSnake(List<Double> positionX,List<Double> positionY,int size){
