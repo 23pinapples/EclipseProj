@@ -94,7 +94,7 @@ public class SnakeGame {
 
 			if (Move.collision(positionX, positionY, size)==false)
 			{
-				System.out.println("snake is dead");
+				System.out.println("Hail Hydra!");
 				break;
 			}
 
@@ -103,7 +103,8 @@ public class SnakeGame {
 			if (Move.getFood(positionX,positionY,size))
 			{
 				score++;
-				System.out.println("yum " + score);
+				System.out.println("yum! you ate " + score + " dollars");
+	
 			}
 
 			Move.drawFood(size);
