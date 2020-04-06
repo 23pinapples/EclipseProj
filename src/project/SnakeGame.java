@@ -94,7 +94,7 @@ public class SnakeGame {
 
 			if (Move.collision(positionX, positionY, size)==false)
 			{
-				System.out.println("Hail Hydra!");
+				System.out.println("snake is dead");
 				break;
 			}
 
