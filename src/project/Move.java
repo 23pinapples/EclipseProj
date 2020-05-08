@@ -10,9 +10,6 @@ import java.io.InputStream;
 import java.util.*;
 
 public class Move {
-	//moving the snake
-	//position of all body parts
-	//drawing the snake
 	private static boolean left = false;
 	private static boolean right = false;
 	private static boolean up = true;
@@ -36,7 +33,7 @@ public class Move {
 		//peet
 		positionX.add(2, 0.5);
 		positionY.add(2, 0.5-(1.0/size));
-		//		System.out.println("in update" +positionY);
+		
 	}
 
 	public static void dir() {
@@ -116,7 +113,7 @@ public class Move {
 
 		{
 			alive = false;
-			//System.out.println("right dead");
+
 		}
 
 		if (up && positionY.get(0)>1)
