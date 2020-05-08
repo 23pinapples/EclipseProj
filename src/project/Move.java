@@ -24,25 +24,7 @@ public class Move {
 	private static boolean alive = true;
 	
 	private static double foodPosX, foodPosY;
-	//	private List <Double> positionX;
-	//	private List<Double> positionY;
-	//private static int size = 21;
-
-
-	//	public Move(int size) {
-	//		this.size = size;
-	//		positionX = new LinkedList<Double>();
-	//		positionY = new LinkedList<Double>();
-	//		//head
-	//		positionX.add(0, 0.5);
-	//		positionY.add(0, 0.5+(1.0/size));
-	//		//body
-	//		positionX.add(1, 0.5);
-	//		positionY.add(1, 0.5);
-	//		//peet
-	//		positionX.add(2, 0.5);
-	//		positionY.add(2, 0.5-(1.0/size));
-	//	}
+	
 	public static void update(List<Double> positionX,List<Double> positionY, int size) {
 		//
 		//head
@@ -200,8 +182,7 @@ public class Move {
 		InputStream dolla = classLoader.getResourceAsStream("dolla.png");
 		foodPosX = (1/(2.0*size))+ (1.0/size)*(int)(Math.random()*size);
 		foodPosY = (1/(2.0*size))+ (1.0/size)*(int)(Math.random()*size);
-//		System.out.println("food x pos is " + foodPosX + "food  y pos is " + foodPosY);
-//		StdDraw.picture(foodPosX, foodPosY, "dolla.png", 1.0/size, 1.0/size);
+
 	}
 	
 	public static void drawFood(int size) {
